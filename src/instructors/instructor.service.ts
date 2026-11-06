@@ -16,7 +16,7 @@ export class InstructorsService {
   }) {
     const [result] = await this.pool().execute<OkPacket>(
       `INSERT INTO instructors (department_id, instructor_name, email, date_hired) 
-       VALUES (?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?)`,
       [
         data.department_id,
         data.instructor_name,
@@ -73,9 +73,9 @@ export class InstructorsService {
     ];
 
     for (const field of allowedFields) {
-      if (partial[field] !== undefined) {
+      if (partial[field as keyof typeof partial] !== undefined) {
         fields.push(`${field} = ?`);
-        values.push(partial[field]);
+        values.push(partial[field as keyof typeof partial]);
       }
     }
 

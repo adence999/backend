@@ -19,7 +19,7 @@ export class StudentsService {
   }) {
     const [result] = await this.pool().execute<OkPacket>(
       `INSERT INTO students (student_number, first_name, last_name, email, birth_date, gender, address) 
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         data.student_number,
         data.first_name,
@@ -85,9 +85,9 @@ export class StudentsService {
     ];
 
     for (const field of allowedFields) {
-      if (partial[field] !== undefined) {
+      if (partial[field as keyof typeof partial] !== undefined) {
         fields.push(`${field} = ?`);
-        values.push(partial[field]);
+        values.push(partial[field as keyof typeof partial]);
       }
     }
 
